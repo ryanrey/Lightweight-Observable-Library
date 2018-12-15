@@ -10,7 +10,7 @@ import Foundation
 
 typealias EventHandler<T> = (Event<T>) -> Void
 
-public struct Subscriber<T> {
+public struct Subscription<T> {
     let queue: DispatchQueue?
     let eventHandler: EventHandler<T>
     let token = UUID()

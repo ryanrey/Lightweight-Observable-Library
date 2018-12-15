@@ -12,5 +12,25 @@ public protocol ObservableType {
     associatedtype T
     
     @discardableResult
-    func subscribe(_ queue: DispatchQueue?, onNext: ((T) -> Void)?, onError: ((Error) -> Void)?, onCompleted: (() -> Void)?) -> Disposable
+    func subscribe(onNext: ((T) -> Void)?, onError: ((Error) -> Void)?, onCompleted: (() -> Void)?, queue: DispatchQueue?) -> Disposable
+    func unsubscribeAll()
+    func on(_ event: Event<T>)
+}
+
+
+extension ObservableType {
+    @discardableResult
+    func subscribeOnNext(_ onNext: ((T) -> Void)?) -> Disposable {
+        return subscribe(onNext: onNext, onError: nil, onCompleted: nil, queue: nil)
+    }
+    
+    @discardableResult
+    func subscribeOnError(_ onError: ((Error) -> Void)?) -> Disposable {
+        return subscribe(onNext: nil, onError: onError, onCompleted: nil, queue: nil)
+    }
+    
+    @discardableResult
+    func subscribeOnCompleted(_ onCompleted: (() -> Void)?) -> Disposable {
+        return subscribe(onNext: nil, onError: nil, onCompleted: onCompleted, queue: nil)
+    }
 }

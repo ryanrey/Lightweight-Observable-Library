@@ -17,7 +17,7 @@
 		0ADFFB0221C497CD00A1ADB4 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0121C497CD00A1ADB4 /* Event.swift */; };
 		0ADFFB0421C497EE00A1ADB4 /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0321C497EE00A1ADB4 /* ObservableType.swift */; };
 		0ADFFB0621C4B19600A1ADB4 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0521C4B19600A1ADB4 /* Disposable.swift */; };
-		0ADFFB0821C4B26000A1ADB4 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0721C4B26000A1ADB4 /* Subscriber.swift */; };
+		0ADFFB0821C4B26000A1ADB4 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0721C4B26000A1ADB4 /* Subscription.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +45,7 @@
 		0ADFFB0121C497CD00A1ADB4 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		0ADFFB0321C497EE00A1ADB4 /* ObservableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableType.swift; sourceTree = "<group>"; };
 		0ADFFB0521C4B19600A1ADB4 /* Disposable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
-		0ADFFB0721C4B26000A1ADB4 /* Subscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
+		0ADFFB0721C4B26000A1ADB4 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +112,7 @@
 			children = (
 				0ADFFB0321C497EE00A1ADB4 /* ObservableType.swift */,
 				0ADFFAFC21C493DD00A1ADB4 /* Observable.swift */,
-				0ADFFB0721C4B26000A1ADB4 /* Subscriber.swift */,
+				0ADFFB0721C4B26000A1ADB4 /* Subscription.swift */,
 				0ADFFB0121C497CD00A1ADB4 /* Event.swift */,
 				0ADFFB0521C4B19600A1ADB4 /* Disposable.swift */,
 			);
@@ -226,7 +226,7 @@
 				0ADFFAFD21C493DD00A1ADB4 /* Observable.swift in Sources */,
 				0ADFFADD21C4938000A1ADB4 /* AppDelegate.swift in Sources */,
 				0ADFFB0421C497EE00A1ADB4 /* ObservableType.swift in Sources */,
-				0ADFFB0821C4B26000A1ADB4 /* Subscriber.swift in Sources */,
+				0ADFFB0821C4B26000A1ADB4 /* Subscription.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
