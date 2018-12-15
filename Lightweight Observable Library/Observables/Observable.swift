@@ -8,16 +8,15 @@
 
 import Foundation
 
-
 public class Observable<T>: ObservableType {
-    typealias SubscriptionToken = Int
+    typealias ObservationToken = Int
     
     // MARK: - Properties
     
     private var _value: T
-    private var subscriptions: [SubscriptionToken: Subscription<T>] = [:]
+    private var subscriptions: [ObservationToken: Subscription<T>] = [:]
     private let lock = NSRecursiveLock()
-    private var lastEvent: Event<T>?
+    private var terminationEvent: Event<T>?
     
     public var value: T {
         get {
@@ -31,6 +30,7 @@ public class Observable<T>: ObservableType {
             defer { lock.unlock() }
             
             _value = newValue
+            
             notify(event: .next(newValue))
         }
     }
@@ -64,8 +64,8 @@ public class Observable<T>: ObservableType {
             strongSelf.subscriptions[subscription.token.hashValue] = nil
         }
         
-        if let lastEvent = lastEvent {
-            notify(subscription: subscription, event: lastEvent)
+        if let terminationEvent = terminationEvent {
+            notify(subscription: subscription, event: terminationEvent)
         }
         
         return disposable
@@ -87,7 +87,9 @@ public class Observable<T>: ObservableType {
     
     /// Transforms all event callbacks into a single 'EventHandler'.
     /// - Returns: an 'EventHandler' to be called when events are published.
-    private func makeEventHandler(onNext: ((T) -> Void)? = nil, onError: ((Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil) -> EventHandler<T> {
+    fileprivate func makeEventHandler(onNext: ((T) -> Void)? = nil,
+                                  onError: ((Error) -> Void)? = nil,
+                                  onCompleted: (() -> Void)? = nil) -> EventHandler<T> {
         return { event in
             switch event {
             case .next(let value): onNext?(value)
@@ -122,3 +124,4 @@ public class Observable<T>: ObservableType {
         }
     }
 }
+

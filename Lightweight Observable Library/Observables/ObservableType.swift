@@ -18,19 +18,36 @@ public protocol ObservableType {
 }
 
 
+// MARK: - Convenience extensions
+
 extension ObservableType {
     @discardableResult
     func subscribeOnNext(_ onNext: ((T) -> Void)?) -> Disposable {
-        return subscribe(onNext: onNext, onError: nil, onCompleted: nil, queue: nil)
+        return subscribeOnNext(onNext, queue: nil)
     }
     
     @discardableResult
     func subscribeOnError(_ onError: ((Error) -> Void)?) -> Disposable {
-        return subscribe(onNext: nil, onError: onError, onCompleted: nil, queue: nil)
+        return subscribeOnError(onError, queue: nil)
     }
     
     @discardableResult
     func subscribeOnCompleted(_ onCompleted: (() -> Void)?) -> Disposable {
-        return subscribe(onNext: nil, onError: nil, onCompleted: onCompleted, queue: nil)
+        return subscribeOnCompleted(onCompleted, queue: nil)
+    }
+    
+    @discardableResult
+    func subscribeOnNext(_ onNext: ((T) -> Void)?, queue: DispatchQueue?) -> Disposable {
+        return subscribe(onNext: onNext, onError: nil, onCompleted: nil, queue: queue)
+    }
+    
+    @discardableResult
+    func subscribeOnError(_ onError: ((Error) -> Void)?, queue: DispatchQueue?) -> Disposable {
+        return subscribe(onNext: nil, onError: onError, onCompleted: nil, queue: queue)
+    }
+    
+    @discardableResult
+    func subscribeOnCompleted(_ onCompleted: (() -> Void)?, queue: DispatchQueue?) -> Disposable {
+        return subscribe(onNext: nil, onError: nil, onCompleted: onCompleted, queue: queue)
     }
 }
