@@ -13,6 +13,11 @@
 		0ADFFAE421C4938100A1ADB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFFAE321C4938100A1ADB4 /* Assets.xcassets */; };
 		0ADFFAE721C4938100A1ADB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFFAE521C4938100A1ADB4 /* LaunchScreen.storyboard */; };
 		0ADFFAF221C4938100A1ADB4 /* Lightweight_Observable_LibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFAF121C4938100A1ADB4 /* Lightweight_Observable_LibraryTests.swift */; };
+		0ADFFAFD21C493DD00A1ADB4 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFAFC21C493DD00A1ADB4 /* Observable.swift */; };
+		0ADFFB0221C497CD00A1ADB4 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0121C497CD00A1ADB4 /* Event.swift */; };
+		0ADFFB0421C497EE00A1ADB4 /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0321C497EE00A1ADB4 /* ObservableType.swift */; };
+		0ADFFB0621C4B19600A1ADB4 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0521C4B19600A1ADB4 /* Disposable.swift */; };
+		0ADFFB0821C4B26000A1ADB4 /* Subscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0721C4B26000A1ADB4 /* Subscriber.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +41,11 @@
 		0ADFFAED21C4938100A1ADB4 /* Lightweight Observable LibraryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lightweight Observable LibraryTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ADFFAF121C4938100A1ADB4 /* Lightweight_Observable_LibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lightweight_Observable_LibraryTests.swift; sourceTree = "<group>"; };
 		0ADFFAF321C4938100A1ADB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0ADFFAFC21C493DD00A1ADB4 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		0ADFFB0121C497CD00A1ADB4 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		0ADFFB0321C497EE00A1ADB4 /* ObservableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableType.swift; sourceTree = "<group>"; };
+		0ADFFB0521C4B19600A1ADB4 /* Disposable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
+		0ADFFB0721C4B26000A1ADB4 /* Subscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscriber.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +87,7 @@
 		0ADFFADB21C4938000A1ADB4 /* Lightweight Observable Library */ = {
 			isa = PBXGroup;
 			children = (
+				0ADFFAFE21C497B100A1ADB4 /* Observables */,
 				0ADFFADC21C4938000A1ADB4 /* AppDelegate.swift */,
 				0ADFFADE21C4938000A1ADB4 /* ViewController.swift */,
 				0ADFFAE021C4938000A1ADB4 /* Main.storyboard */,
@@ -94,6 +105,18 @@
 				0ADFFAF321C4938100A1ADB4 /* Info.plist */,
 			);
 			path = "Lightweight Observable LibraryTests";
+			sourceTree = "<group>";
+		};
+		0ADFFAFE21C497B100A1ADB4 /* Observables */ = {
+			isa = PBXGroup;
+			children = (
+				0ADFFB0321C497EE00A1ADB4 /* ObservableType.swift */,
+				0ADFFAFC21C493DD00A1ADB4 /* Observable.swift */,
+				0ADFFB0721C4B26000A1ADB4 /* Subscriber.swift */,
+				0ADFFB0121C497CD00A1ADB4 /* Event.swift */,
+				0ADFFB0521C4B19600A1ADB4 /* Disposable.swift */,
+			);
+			path = Observables;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,8 +220,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ADFFB0221C497CD00A1ADB4 /* Event.swift in Sources */,
+				0ADFFB0621C4B19600A1ADB4 /* Disposable.swift in Sources */,
 				0ADFFADF21C4938000A1ADB4 /* ViewController.swift in Sources */,
+				0ADFFAFD21C493DD00A1ADB4 /* Observable.swift in Sources */,
 				0ADFFADD21C4938000A1ADB4 /* AppDelegate.swift in Sources */,
+				0ADFFB0421C497EE00A1ADB4 /* ObservableType.swift in Sources */,
+				0ADFFB0821C4B26000A1ADB4 /* Subscriber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
