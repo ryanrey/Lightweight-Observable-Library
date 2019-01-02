@@ -10,15 +10,17 @@ import Foundation
 
 public class Observable<T>: ObservableType {
     typealias ObservationToken = Int
+    typealias CreationBlock = (Observable<T>) -> Void
     
     // MARK: - Properties
     
-    private var _value: T
+    private var _value: T?
     private var subscriptions: [ObservationToken: Subscription<T>] = [:]
     private let lock = NSRecursiveLock()
     private var terminationEvent: Event<T>?
+    private var creationBlock: CreationBlock? = nil
     
-    public var value: T {
+    public var value: T? {
         get {
             lock.lock()
             defer { lock.unlock() }
@@ -31,7 +33,9 @@ public class Observable<T>: ObservableType {
             
             _value = newValue
             
-            notify(event: .next(newValue))
+            if let newValue = newValue {
+                notify(event: .next(newValue))
+            }
         }
     }
     
@@ -41,6 +45,17 @@ public class Observable<T>: ObservableType {
     init(_ value: T) {
         _value = value
     }
+    
+    init() {
+        _value = nil
+    }
+    
+    init(creationBlock: CreationBlock? = nil) {
+        self.creationBlock = creationBlock
+    }
+    
+    
+    
     
     /// Creates and stores a Subscription to this observable.
     /// The subscription will receive 'event's until the subscription removed
@@ -58,7 +73,7 @@ public class Observable<T>: ObservableType {
         
         subscriptions[subscription.token.hashValue] = subscription
         
-        let disposable = Disposable { [weak self] in
+        let disposable = AnyDisposable { [weak self] in
             guard let strongSelf = self else { assertionFailure(); return }
             
             strongSelf.subscriptions[subscription.token.hashValue] = nil
@@ -66,6 +81,12 @@ public class Observable<T>: ObservableType {
         
         if let terminationEvent = terminationEvent {
             notify(subscription: subscription, event: terminationEvent)
+            return disposable
+        }
+        
+        if let creationBlock = creationBlock {
+            runCreationBlock(creationBlock: creationBlock, queue: queue)
+            self.creationBlock = nil
         }
         
         return disposable
@@ -123,5 +144,42 @@ public class Observable<T>: ObservableType {
             }
         }
     }
+    
+    /// Call the EventHandler on a single Subscription
+    /// - Parameter event: the event being published
+    private func runCreationBlock(creationBlock: @escaping (Observable<T>) -> Void, queue: DispatchQueue? = nil) {
+        guard let queue = queue else {
+            creationBlock(self)
+            return
+        }
+    
+        if queue == .main && Thread.isMainThread {
+           creationBlock(self)
+        } else {
+            queue.async {
+                creationBlock(self)
+            }
+        }
+    }
 }
 
+extension Observable {
+    static func just<T>(_ value: T) -> Observable<T> {
+        let observable = Observable<T>(value)
+        
+        observable.on(.next(value))
+        observable.on(.completed)
+        
+        return observable
+    }
+}
+
+extension Observable {
+    static func create<T>() -> Observable<T> {
+        return Observable<T>()
+    }
+    
+    static func create<T>(_ block: @escaping (Observable<T>) -> Void) -> Observable<T> {
+        return Observable<T>(creationBlock: block)
+    }
+}

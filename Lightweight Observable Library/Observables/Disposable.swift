@@ -8,14 +8,25 @@
 
 import Foundation
 
-public class Disposable {
+public protocol Disposable {
+    func dispose()
+}
+
+public class AnyDisposable: Disposable {
     private var disposeBlock: (() -> Void)?
     
-    init(_ disposeBlock: @escaping () -> Void) {
+    public init(_ disposeBlock: (() -> Void)? = nil) {
         self.disposeBlock = disposeBlock
     }
     
-    func dispose() {
+    public func dispose() {
         disposeBlock?()
+    }
+}
+
+
+extension Disposable {
+    static func create() -> Disposable {
+        return AnyDisposable()
     }
 }

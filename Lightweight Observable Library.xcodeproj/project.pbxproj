@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AC4E92621CE029A00835352 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC4E92521CE029A00835352 /* Scheduler.swift */; };
+		0AC4E92821CE047900835352 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC4E92721CE047900835352 /* Observer.swift */; };
 		0ADFFADD21C4938000A1ADB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFADC21C4938000A1ADB4 /* AppDelegate.swift */; };
 		0ADFFADF21C4938000A1ADB4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFADE21C4938000A1ADB4 /* ViewController.swift */; };
 		0ADFFAE221C4938000A1ADB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFFAE021C4938000A1ADB4 /* Main.storyboard */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0AC4E92521CE029A00835352 /* Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+		0AC4E92721CE047900835352 /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		0ADFFAD921C4938000A1ADB4 /* Lightweight Observable Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lightweight Observable Library.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ADFFADC21C4938000A1ADB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0ADFFADE21C4938000A1ADB4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -117,7 +121,9 @@
 			isa = PBXGroup;
 			children = (
 				0ADFFB0321C497EE00A1ADB4 /* ObservableType.swift */,
+				0AC4E92521CE029A00835352 /* Scheduler.swift */,
 				0ADFFAFC21C493DD00A1ADB4 /* Observable.swift */,
+				0AC4E92721CE047900835352 /* Observer.swift */,
 				0ADFFB1121C58C8700A1ADB4 /* Observable+Extensions.swift */,
 				0ADFFB0921C4C8D300A1ADB4 /* Bindable.swift */,
 				0ADFFB0F21C58BE600A1ADB4 /* Bindable+UIKit.swift */,
@@ -229,6 +235,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AC4E92621CE029A00835352 /* Scheduler.swift in Sources */,
+				0AC4E92821CE047900835352 /* Observer.swift in Sources */,
 				0ADFFB0221C497CD00A1ADB4 /* Event.swift in Sources */,
 				0ADFFB1021C58BE600A1ADB4 /* Bindable+UIKit.swift in Sources */,
 				0ADFFB0621C4B19600A1ADB4 /* Disposable.swift in Sources */,

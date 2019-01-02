@@ -12,7 +12,10 @@ public protocol ObservableType {
     associatedtype T
     
     @discardableResult
-    func subscribe(onNext: ((T) -> Void)?, onError: ((Error) -> Void)?, onCompleted: (() -> Void)?, queue: DispatchQueue?) -> Disposable
+    func subscribe(onNext: ((T) -> Void)?,
+                   onError: ((Error) -> Void)?,
+                   onCompleted: (() -> Void)?,
+                   queue: DispatchQueue?) -> Disposable
     func unsubscribeAll()
     func on(_ event: Event<T>)
 }
