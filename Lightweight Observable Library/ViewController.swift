@@ -10,51 +10,53 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var name = Observable("Initial value")
-    var disposables: [Disposable] = []
+    var name = Observable("ViewController Initial value")
     @IBOutlet weak var label: UILabel!
+    
+    @IBAction func goToNext(_ sender: Any) {
+        let testVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TestVC") as! TestVC
+        
+       navigationController?.pushViewController(testVC, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        name.subscribeOnNext { value in
-            print("value: \(value)")
-        }
         
-        name.subscribe(
-            onNext: { value in
-                print("value: \(value)")
-        },
-            onError: { error in
-                print("error: \(error)")
-        },
-            onCompleted: {
-                print("onCompleted")
-        })
+        setupSubscriptions()
     }
     
     deinit {
-        disposables.removeAll()
+         print("💩 ViewController deinit")
+      //  disposeBag.dispose()
     }
     
     private func setupSubscriptions() {
-        let disposable = name.subscribe(
+        name.subscribeOnNext { value in
+            print("ViewController next: \(value)")
+        }.addToDisposeBag(disposeBag)
+        
+        name.subscribe(
             onNext: { value in
-                print("value: \(value)")
+                print("ViewController next:: \(value)")
         },
             onError: { error in
-                print("error: \(error)")
+                print("ViewController error: \(error)")
         },
             onCompleted: {
-                print("onCompleted")
-        })
-        
-        disposables.append(disposable)
+                print("ViewController onCompleted")
+        }).addToDisposeBag(disposeBag)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        name.value = "hello"
+        name.value = "ViewController appeared"
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        name.value = "ViewController disappeared"
     }
 }
 

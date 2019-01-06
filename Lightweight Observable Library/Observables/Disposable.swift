@@ -12,21 +12,30 @@ public protocol Disposable {
     func dispose()
 }
 
-public class AnyDisposable: Disposable {
-    private var disposeBlock: (() -> Void)?
-    
-    public init(_ disposeBlock: (() -> Void)? = nil) {
-        self.disposeBlock = disposeBlock
-    }
-    
-    public func dispose() {
-        disposeBlock?()
+extension Disposable {
+    public func addToDisposeBag(_ disposeBag: DisposeBag) {
+        disposeBag.add(self)
     }
 }
 
 
-extension Disposable {
-    static func create() -> Disposable {
-        return AnyDisposable()
+@objc public class DisposeBag: NSObject {
+    private lazy var disposables: [Disposable] = []
+    
+    public func add(_ disposable: Disposable) {
+        print("add disposable")
+        disposables.append(disposable)
+    }
+    
+    deinit {
+        print("💩 DisposeBag deinit")
+        dispose()
+    }
+    
+    private func dispose() {
+        for disposable in disposables {
+            print("disposable.dispose()")
+            disposable.dispose()
+        }
     }
 }

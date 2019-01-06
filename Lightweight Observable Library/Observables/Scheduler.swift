@@ -9,8 +9,31 @@
 import Foundation
 
 
-public protocol Scheduler {
-    var queue: DispatchQueue { get set }
+public protocol SchedulerType {
+    func performBlock(_ eventHandler: @escaping () -> Void)
+}
+
+public class Scheduler: SchedulerType {
+    private let queue: DispatchQueue?
+    
+    public init(queue: DispatchQueue? = nil) {
+        self.queue = queue
+    }
+    
+    public func performBlock(_ eventHandler:  @escaping () -> Void) {
+        guard let queue = queue else {
+            eventHandler()
+            return
+        }
+        
+        if queue == .main && Thread.isMainThread {
+            eventHandler()
+        } else {
+            queue.async {
+                eventHandler()
+            }
+        }
+    }
 }
 
 

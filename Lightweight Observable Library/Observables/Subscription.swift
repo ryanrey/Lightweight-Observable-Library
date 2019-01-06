@@ -8,10 +8,8 @@
 
 import Foundation
 
-typealias EventHandler<T> = (Event<T>) -> Void
-
 public struct Subscription<T> {
-    let queue: DispatchQueue?
-    let eventHandler: EventHandler<T>
+    let scheduler: SchedulerType?
+    let observer: AnyObserver<T>
     let token = UUID()
 }

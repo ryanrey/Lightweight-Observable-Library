@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ABCFB5521E18AC90052FDBF /* ObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFB5421E18AC90052FDBF /* ObserverType.swift */; };
+		0ABCFB5821E18D0B0052FDBF /* DisposableContainer+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFB5721E18D0B0052FDBF /* DisposableContainer+UIKit.swift */; };
+		0ABCFB5A21E190BE0052FDBF /* DisposableFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFB5921E190BE0052FDBF /* DisposableFactory.swift */; };
+		0ABCFB5E21E198B70052FDBF /* SubjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFB5D21E198B70052FDBF /* SubjectType.swift */; };
 		0AC4E92621CE029A00835352 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC4E92521CE029A00835352 /* Scheduler.swift */; };
-		0AC4E92821CE047900835352 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC4E92721CE047900835352 /* Observer.swift */; };
+		0AC4E92821CE047900835352 /* AnyObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC4E92721CE047900835352 /* AnyObserver.swift */; };
 		0ADFFADD21C4938000A1ADB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFADC21C4938000A1ADB4 /* AppDelegate.swift */; };
 		0ADFFADF21C4938000A1ADB4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFADE21C4938000A1ADB4 /* ViewController.swift */; };
 		0ADFFAE221C4938000A1ADB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFFAE021C4938000A1ADB4 /* Main.storyboard */; };
@@ -23,6 +27,8 @@
 		0ADFFB0A21C4C8D300A1ADB4 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0921C4C8D300A1ADB4 /* Bindable.swift */; };
 		0ADFFB1021C58BE600A1ADB4 /* Bindable+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0F21C58BE600A1ADB4 /* Bindable+UIKit.swift */; };
 		0ADFFB1221C58C8700A1ADB4 /* Observable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB1121C58C8700A1ADB4 /* Observable+Extensions.swift */; };
+		0AF0A4EC21DDC304009C05A6 /* DisposableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0A4EB21DDC304009C05A6 /* DisposableContainer.swift */; };
+		0AF0A4EE21DDC756009C05A6 /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0A4ED21DDC756009C05A6 /* TestVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,8 +42,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0ABCFB5421E18AC90052FDBF /* ObserverType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserverType.swift; sourceTree = "<group>"; };
+		0ABCFB5721E18D0B0052FDBF /* DisposableContainer+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DisposableContainer+UIKit.swift"; sourceTree = "<group>"; };
+		0ABCFB5921E190BE0052FDBF /* DisposableFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposableFactory.swift; sourceTree = "<group>"; };
+		0ABCFB5D21E198B70052FDBF /* SubjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectType.swift; sourceTree = "<group>"; };
 		0AC4E92521CE029A00835352 /* Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
-		0AC4E92721CE047900835352 /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
+		0AC4E92721CE047900835352 /* AnyObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyObserver.swift; sourceTree = "<group>"; };
 		0ADFFAD921C4938000A1ADB4 /* Lightweight Observable Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lightweight Observable Library.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ADFFADC21C4938000A1ADB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0ADFFADE21C4938000A1ADB4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +66,8 @@
 		0ADFFB0921C4C8D300A1ADB4 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		0ADFFB0F21C58BE600A1ADB4 /* Bindable+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bindable+UIKit.swift"; sourceTree = "<group>"; };
 		0ADFFB1121C58C8700A1ADB4 /* Observable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Extensions.swift"; sourceTree = "<group>"; };
+		0AF0A4EB21DDC304009C05A6 /* DisposableContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposableContainer.swift; sourceTree = "<group>"; };
+		0AF0A4ED21DDC756009C05A6 /* TestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +113,7 @@
 				0ADFFADC21C4938000A1ADB4 /* AppDelegate.swift */,
 				0ADFFADE21C4938000A1ADB4 /* ViewController.swift */,
 				0ADFFAE021C4938000A1ADB4 /* Main.storyboard */,
+				0AF0A4ED21DDC756009C05A6 /* TestVC.swift */,
 				0ADFFAE321C4938100A1ADB4 /* Assets.xcassets */,
 				0ADFFAE521C4938100A1ADB4 /* LaunchScreen.storyboard */,
 				0ADFFAE821C4938100A1ADB4 /* Info.plist */,
@@ -120,16 +133,21 @@
 		0ADFFAFE21C497B100A1ADB4 /* Observables */ = {
 			isa = PBXGroup;
 			children = (
-				0ADFFB0321C497EE00A1ADB4 /* ObservableType.swift */,
 				0AC4E92521CE029A00835352 /* Scheduler.swift */,
 				0ADFFAFC21C493DD00A1ADB4 /* Observable.swift */,
-				0AC4E92721CE047900835352 /* Observer.swift */,
+				0ADFFB0321C497EE00A1ADB4 /* ObservableType.swift */,
 				0ADFFB1121C58C8700A1ADB4 /* Observable+Extensions.swift */,
+				0AC4E92721CE047900835352 /* AnyObserver.swift */,
+				0ABCFB5421E18AC90052FDBF /* ObserverType.swift */,
+				0AF0A4EB21DDC304009C05A6 /* DisposableContainer.swift */,
+				0ABCFB5721E18D0B0052FDBF /* DisposableContainer+UIKit.swift */,
 				0ADFFB0921C4C8D300A1ADB4 /* Bindable.swift */,
 				0ADFFB0F21C58BE600A1ADB4 /* Bindable+UIKit.swift */,
 				0ADFFB0721C4B26000A1ADB4 /* Subscription.swift */,
 				0ADFFB0121C497CD00A1ADB4 /* Event.swift */,
 				0ADFFB0521C4B19600A1ADB4 /* Disposable.swift */,
+				0ABCFB5921E190BE0052FDBF /* DisposableFactory.swift */,
+				0ABCFB5D21E198B70052FDBF /* SubjectType.swift */,
 			);
 			path = Observables;
 			sourceTree = "<group>";
@@ -236,15 +254,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AC4E92621CE029A00835352 /* Scheduler.swift in Sources */,
-				0AC4E92821CE047900835352 /* Observer.swift in Sources */,
+				0AC4E92821CE047900835352 /* AnyObserver.swift in Sources */,
 				0ADFFB0221C497CD00A1ADB4 /* Event.swift in Sources */,
 				0ADFFB1021C58BE600A1ADB4 /* Bindable+UIKit.swift in Sources */,
+				0ABCFB5821E18D0B0052FDBF /* DisposableContainer+UIKit.swift in Sources */,
 				0ADFFB0621C4B19600A1ADB4 /* Disposable.swift in Sources */,
 				0ADFFB0A21C4C8D300A1ADB4 /* Bindable.swift in Sources */,
+				0ABCFB5521E18AC90052FDBF /* ObserverType.swift in Sources */,
+				0AF0A4EE21DDC756009C05A6 /* TestVC.swift in Sources */,
 				0ADFFADF21C4938000A1ADB4 /* ViewController.swift in Sources */,
+				0ABCFB5E21E198B70052FDBF /* SubjectType.swift in Sources */,
 				0ADFFB1221C58C8700A1ADB4 /* Observable+Extensions.swift in Sources */,
+				0AF0A4EC21DDC304009C05A6 /* DisposableContainer.swift in Sources */,
 				0ADFFAFD21C493DD00A1ADB4 /* Observable.swift in Sources */,
 				0ADFFADD21C4938000A1ADB4 /* AppDelegate.swift in Sources */,
+				0ABCFB5A21E190BE0052FDBF /* DisposableFactory.swift in Sources */,
 				0ADFFB0421C497EE00A1ADB4 /* ObservableType.swift in Sources */,
 				0ADFFB0821C4B26000A1ADB4 /* Subscription.swift in Sources */,
 			);
