@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var name = Observable("ViewController Initial value")
+    var name = Observable("VC Initial value")
     @IBOutlet weak var label: UILabel!
     
     @IBAction func goToNext(_ sender: Any) {
@@ -31,16 +31,16 @@ class ViewController: UIViewController {
     }
     
     private func setupSubscriptions() {
-        name.subscribeOnNext { value in
-            print("ViewController next: \(value)")
-        }.addToDisposeBag(disposeBag)
-        
+//        name.subscribeOnNext { value in
+//            print("ViewController subscribeOnNext: \(value)")
+//        }.addToDisposeBag(disposeBag)
+//        
         name.subscribe(
             onNext: { value in
-                print("ViewController next:: \(value)")
+                print("ViewController onNext: \(value)")
         },
             onError: { error in
-                print("ViewController error: \(error)")
+                print("ViewController onError: \(error)")
         },
             onCompleted: {
                 print("ViewController onCompleted")

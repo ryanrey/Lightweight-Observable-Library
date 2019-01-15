@@ -15,7 +15,9 @@ public protocol ObservableType {
     func subscribe(onNext: ((T) -> Void)?,
                    onError: ((Error) -> Void)?,
                    onCompleted: (() -> Void)?,
-                   scheduler: SchedulerType?) -> Disposable
+                   queue: SchedulerQueue?) -> Disposable
+    
+    func observeOn(_ queue: SchedulerQueue)
 }
 
 
@@ -24,32 +26,32 @@ public protocol ObservableType {
 extension ObservableType {
     @discardableResult
     func subscribeOnNext(_ onNext: ((T) -> Void)?) -> Disposable {
-        return subscribeOnNext(onNext, scheduler: nil)
+        return subscribeOnNext(onNext, queue: nil)
     }
     
     @discardableResult
     func subscribeOnError(_ onError: ((Error) -> Void)?) -> Disposable {
-        return subscribeOnError(onError, scheduler: nil)
+        return subscribeOnError(onError, queue: nil)
     }
     
     @discardableResult
     func subscribeOnCompleted(_ onCompleted: (() -> Void)?) -> Disposable {
-        return subscribeOnCompleted(onCompleted, scheduler: nil)
+        return subscribeOnCompleted(onCompleted, queue: nil)
     }
     
     @discardableResult
-    func subscribeOnNext(_ onNext: ((T) -> Void)?, scheduler: SchedulerType? = nil) -> Disposable {
-        return subscribe(onNext: onNext, onError: nil, onCompleted: nil, scheduler: scheduler)
+    func subscribeOnNext(_ onNext: ((T) -> Void)?, queue: SchedulerQueue? = nil) -> Disposable {
+        return subscribe(onNext: onNext, onError: nil, onCompleted: nil, queue: queue)
     }
     
     @discardableResult
-    func subscribeOnError(_ onError: ((Error) -> Void)?, scheduler: SchedulerType? = nil) -> Disposable {
-        return subscribe(onNext: nil, onError: onError, onCompleted: nil, scheduler: scheduler)
+    func subscribeOnError(_ onError: ((Error) -> Void)?, queue: SchedulerQueue? = nil) -> Disposable {
+        return subscribe(onNext: nil, onError: onError, onCompleted: nil, queue: queue)
     }
     
     @discardableResult
-    func subscribeOnCompleted(_ onCompleted: (() -> Void)?, scheduler: SchedulerType? = nil) -> Disposable {
-        return subscribe(onNext: nil, onError: nil, onCompleted: onCompleted, scheduler: scheduler)
+    func subscribeOnCompleted(_ onCompleted: (() -> Void)?, queue: SchedulerQueue? = nil) -> Disposable {
+        return subscribe(onNext: nil, onError: nil, onCompleted: onCompleted, queue: queue)
     }
     
     @discardableResult
@@ -59,6 +61,6 @@ extension ObservableType {
         return subscribe(onNext: onNext,
                          onError: onError,
                          onCompleted: onCompleted,
-                         scheduler: nil)
+                         queue: nil)
     }
 }

@@ -27,7 +27,7 @@ class TestVC: UIViewController {
     
     private func setupSubscriptions() {
         name.subscribeOnNext { value in
-            print("TestVC next: \(value)")
+            print("TestVC next only: \(value)")
         }.addToDisposeBag(disposeBag)
         
         name.subscribe(
