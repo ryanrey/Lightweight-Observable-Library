@@ -1,8 +1,6 @@
 //
 //  Bindable.swift
-//  Lightweight Observable Library
 //
-//  Created by Ark on 12/15/18.
 //  Copyright © 2018 Ark. All rights reserved.
 //
 

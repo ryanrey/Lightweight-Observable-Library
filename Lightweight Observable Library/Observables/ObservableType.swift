@@ -1,8 +1,6 @@
 //
 //  ObservableType.swift
-//  Lightweight Observable Library
 //
-//  Created by Ark on 12/14/18.
 //  Copyright © 2018 Ark. All rights reserved.
 //
 
@@ -12,9 +10,12 @@ public protocol ObservableType {
     associatedtype T
     
     @discardableResult
-    func subscribe(onNext: ((T) -> Void)?, onError: ((Error) -> Void)?, onCompleted: (() -> Void)?, queue: DispatchQueue?) -> Disposable
-    func unsubscribeAll()
-    func on(_ event: Event<T>)
+    func subscribe(onNext: ((T) -> Void)?,
+                   onError: ((Error) -> Void)?,
+                   onCompleted: (() -> Void)?,
+                   queue: SchedulerQueue?) -> Disposable
+    
+    func observeOn(_ queue: SchedulerQueue)
 }
 
 
@@ -37,17 +38,27 @@ extension ObservableType {
     }
     
     @discardableResult
-    func subscribeOnNext(_ onNext: ((T) -> Void)?, queue: DispatchQueue?) -> Disposable {
+    func subscribeOnNext(_ onNext: ((T) -> Void)?, queue: SchedulerQueue? = nil) -> Disposable {
         return subscribe(onNext: onNext, onError: nil, onCompleted: nil, queue: queue)
     }
     
     @discardableResult
-    func subscribeOnError(_ onError: ((Error) -> Void)?, queue: DispatchQueue?) -> Disposable {
+    func subscribeOnError(_ onError: ((Error) -> Void)?, queue: SchedulerQueue? = nil) -> Disposable {
         return subscribe(onNext: nil, onError: onError, onCompleted: nil, queue: queue)
     }
     
     @discardableResult
-    func subscribeOnCompleted(_ onCompleted: (() -> Void)?, queue: DispatchQueue?) -> Disposable {
+    func subscribeOnCompleted(_ onCompleted: (() -> Void)?, queue: SchedulerQueue? = nil) -> Disposable {
         return subscribe(onNext: nil, onError: nil, onCompleted: onCompleted, queue: queue)
+    }
+    
+    @discardableResult
+    func subscribe(onNext: ((T) -> Void)? = nil,
+                   onError: ((Error) -> Void)? = nil,
+                   onCompleted: (() -> Void)? = nil) -> Disposable {
+        return subscribe(onNext: onNext,
+                         onError: onError,
+                         onCompleted: onCompleted,
+                         queue: nil)
     }
 }
