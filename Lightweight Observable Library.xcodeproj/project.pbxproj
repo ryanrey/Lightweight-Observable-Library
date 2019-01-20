@@ -12,7 +12,6 @@
 		0A3980E521EC2E0A00BE6693 /* ConcurrentScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3980E421EC2E0A00BE6693 /* ConcurrentScheduler.swift */; };
 		0A3980E721EC2E1600BE6693 /* DefaultScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3980E621EC2E1600BE6693 /* DefaultScheduler.swift */; };
 		0A3980EC21EC328500BE6693 /* DisposeBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3980EB21EC328500BE6693 /* DisposeBag.swift */; };
-		0A3980EE21EC383B00BE6693 /* ObservableHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3980ED21EC383B00BE6693 /* ObservableHolder.swift */; };
 		0ABCFB5521E18AC90052FDBF /* ObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFB5421E18AC90052FDBF /* ObserverType.swift */; };
 		0ABCFB5821E18D0B0052FDBF /* DisposableContainer+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFB5721E18D0B0052FDBF /* DisposableContainer+UIKit.swift */; };
 		0ABCFB5A21E190BE0052FDBF /* DisposableFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCFB5921E190BE0052FDBF /* DisposableFactory.swift */; };
@@ -54,7 +53,6 @@
 		0A3980E421EC2E0A00BE6693 /* ConcurrentScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentScheduler.swift; sourceTree = "<group>"; };
 		0A3980E621EC2E1600BE6693 /* DefaultScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultScheduler.swift; sourceTree = "<group>"; };
 		0A3980EB21EC328500BE6693 /* DisposeBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposeBag.swift; sourceTree = "<group>"; };
-		0A3980ED21EC383B00BE6693 /* ObservableHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableHolder.swift; sourceTree = "<group>"; };
 		0ABCFB5421E18AC90052FDBF /* ObserverType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserverType.swift; sourceTree = "<group>"; };
 		0ABCFB5721E18D0B0052FDBF /* DisposableContainer+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DisposableContainer+UIKit.swift"; sourceTree = "<group>"; };
 		0ABCFB5921E190BE0052FDBF /* DisposableFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposableFactory.swift; sourceTree = "<group>"; };
@@ -166,7 +164,6 @@
 			isa = PBXGroup;
 			children = (
 				0ADFFAF121C4938100A1ADB4 /* Lightweight_Observable_LibraryTests.swift */,
-				0A3980ED21EC383B00BE6693 /* ObservableHolder.swift */,
 				0ADFFAF321C4938100A1ADB4 /* Info.plist */,
 			);
 			path = "Lightweight Observable LibraryTests";
@@ -321,7 +318,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A3980EE21EC383B00BE6693 /* ObservableHolder.swift in Sources */,
 				0ADFFAF221C4938100A1ADB4 /* Lightweight_Observable_LibraryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

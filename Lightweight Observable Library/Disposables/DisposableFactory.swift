@@ -1,8 +1,6 @@
 //
 //  DisposableFactory.swift
-//  Lightweight Observable Library
 //
-//  Created by Ark on 1/5/19.
 //  Copyright © 2019 Ark. All rights reserved.
 //
 
@@ -20,10 +18,6 @@ private class AnyDisposable: Disposable {
     /// Parameter disposeBlock: The block to be called when this class is disposed
     public init(_ disposeBlock: (() -> Void)? = nil) {
         self.disposeBlock = disposeBlock
-    }
-    
-    deinit {
-        print("💩 AnyDisposable deinit")
     }
     
     public func dispose() {

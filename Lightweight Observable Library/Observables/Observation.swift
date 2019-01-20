@@ -7,6 +7,6 @@
 import Foundation
 
 public struct Observation<T> {
-    let observer: AnyObserver<T> //weak?
+    let observer: AnyObserver<T>
     let token = UUID()
 }

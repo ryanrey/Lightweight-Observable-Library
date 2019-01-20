@@ -26,15 +26,10 @@ class ViewController: UIViewController {
     }
     
     deinit {
-         print("💩 ViewController deinit")
-      //  disposeBag.dispose()
+         print("ViewController deinit")
     }
     
     private func setupSubscriptions() {
-//        name.subscribeOnNext { value in
-//            print("ViewController subscribeOnNext: \(value)")
-//        }.addToDisposeBag(disposeBag)
-//        
         name.subscribe(
             onNext: { value in
                 print("ViewController onNext: \(value)")

@@ -21,8 +21,7 @@ class TestVC: UIViewController {
     }
     
     deinit {
-        print("💩 TestVC deinit")
-        //  disposeBag.dispose()
+        print("TestVC deinit")
     }
     
     private func setupSubscriptions() {

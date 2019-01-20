@@ -1,8 +1,6 @@
 //
 //  Observable.swift
-//  Lightweight Observable Library
 //
-//  Created by Ark on 12/14/18.
 //  Copyright © 2018 Ark. All rights reserved.
 //
 
@@ -60,7 +58,7 @@ public class Observable<T>: ObservableType {
     }
     
     deinit {
-        print("💩 Observable deinit")
+        print("Observable deinit")
         notify(event: .completed, scheduler: observationScheduler)
     }
     
