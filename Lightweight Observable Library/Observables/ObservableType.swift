@@ -14,8 +14,8 @@ public protocol ObservableType {
                    onError: ((Error) -> Void)?,
                    onCompleted: (() -> Void)?,
                    queue: SchedulerQueue?) -> Disposable
-    
     func observeOn(_ queue: SchedulerQueue)
+    func subscribeOn(_ queue: SchedulerQueue)
 }
 
 

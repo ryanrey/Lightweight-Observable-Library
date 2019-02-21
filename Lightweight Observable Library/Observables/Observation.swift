@@ -9,4 +9,5 @@ import Foundation
 public struct Observation<T> {
     let observer: AnyObserver<T>
     let token = UUID()
+    let scheduler: Scheduler?
 }

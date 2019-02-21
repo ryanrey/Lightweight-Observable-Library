@@ -10,7 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var name = Observable("VC Initial value")
+    var name = Observable<String>.just("VC Initial value")
+    
     @IBOutlet weak var label: UILabel!
     
     @IBAction func goToNext(_ sender: Any) {
@@ -22,7 +23,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupSubscriptions()
+//        setupSubscriptions()
     }
     
     deinit {
@@ -30,7 +31,7 @@ class ViewController: UIViewController {
     }
     
     private func setupSubscriptions() {
-        name.subscribe(
+        name.debug().subscribe(
             onNext: { value in
                 print("ViewController onNext: \(value)")
         },
@@ -45,13 +46,14 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        name.value = "ViewController appeared"
+        setupSubscriptions()
+       // name.value = "ViewController appeared"
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        name.value = "ViewController disappeared"
+       // name.value = "ViewController disappeared"
     }
 }
 

@@ -8,7 +8,7 @@ import UIKit
 
 class TestVC: UIViewController {
     
-    var name = Observable("Initial TestVC value")
+    var name = Observable<String>.just("Initial TestVC value")
     
     @IBAction func goToNext(_ sender: Any) {
         
@@ -17,7 +17,7 @@ class TestVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupSubscriptions()
+       // setupSubscriptions()
     }
     
     deinit {
@@ -44,13 +44,14 @@ class TestVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        name.value = "TestVC appeared"
+        setupSubscriptions()
+       // name.value = "TestVC appeared"
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        name.value = "TestVC disappeared"
+        // name.value = "TestVC disappeared"
     }
 }
 

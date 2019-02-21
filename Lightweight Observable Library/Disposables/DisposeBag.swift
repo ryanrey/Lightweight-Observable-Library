@@ -19,6 +19,7 @@ import Foundation
     
     private func dispose() {
         for disposable in disposables {
+            print("Dispose")
             disposable.dispose()
         }
     }
