@@ -16,7 +16,7 @@ public class Observable<T>: ObservableType {
     private var subscriptionBlock: SubscriptionBlock? = nil
     private var observationScheduler: Scheduler?
     private var subscriptionScheduler: Scheduler?
-    private var isDebugging: Bool = false
+    
     
     // MARK: - Initialization
     
