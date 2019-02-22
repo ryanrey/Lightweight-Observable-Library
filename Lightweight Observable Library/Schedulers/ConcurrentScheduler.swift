@@ -8,7 +8,6 @@ import Foundation
 
 public final class ConcurrentScheduler: Scheduler {
     private let queue: DispatchQueue = .rxConcurrentBackground
-    
     public func performBlock(_ eventHandler:  @escaping () -> Void) {
         queue.async {
             eventHandler()

@@ -14,8 +14,8 @@ public protocol ObservableType {
                    onError: ((Error) -> Void)?,
                    onCompleted: (() -> Void)?,
                    queue: SchedulerQueue?) -> Disposable
-    func observeOn(_ queue: SchedulerQueue)
-    func subscribeOn(_ queue: SchedulerQueue)
+    func observeOn(_ queue: SchedulerQueue) -> Self
+    func subscribeOn(_ queue: SchedulerQueue) -> Self
 }
 
 
@@ -24,31 +24,31 @@ public protocol ObservableType {
 extension ObservableType {
     @discardableResult
     func subscribeOnNext(_ onNext: ((T) -> Void)?) -> Disposable {
-        return subscribeOnNext(onNext, queue: nil)
+        return subscribeOnNext(nil, onNext)
     }
     
     @discardableResult
     func subscribeOnError(_ onError: ((Error) -> Void)?) -> Disposable {
-        return subscribeOnError(onError, queue: nil)
+        return subscribeOnError(nil, onError)
     }
     
     @discardableResult
     func subscribeOnCompleted(_ onCompleted: (() -> Void)?) -> Disposable {
-        return subscribeOnCompleted(onCompleted, queue: nil)
+        return subscribeOnCompleted(queue: nil, onCompleted)
     }
     
     @discardableResult
-    func subscribeOnNext(_ onNext: ((T) -> Void)?, queue: SchedulerQueue? = nil) -> Disposable {
+    func subscribeOnNext(_ queue: SchedulerQueue? = nil, _ onNext: ((T) -> Void)?) -> Disposable {
         return subscribe(onNext: onNext, onError: nil, onCompleted: nil, queue: queue)
     }
     
     @discardableResult
-    func subscribeOnError(_ onError: ((Error) -> Void)?, queue: SchedulerQueue? = nil) -> Disposable {
+    func subscribeOnError(_ queue: SchedulerQueue? = nil, _ onError: ((Error) -> Void)?) -> Disposable {
         return subscribe(onNext: nil, onError: onError, onCompleted: nil, queue: queue)
     }
     
     @discardableResult
-    func subscribeOnCompleted(_ onCompleted: (() -> Void)?, queue: SchedulerQueue? = nil) -> Disposable {
+    func subscribeOnCompleted(queue: SchedulerQueue? = nil, _ onCompleted: (() -> Void)?) -> Disposable {
         return subscribe(onNext: nil, onError: nil, onCompleted: onCompleted, queue: queue)
     }
     

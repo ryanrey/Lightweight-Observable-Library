@@ -12,7 +12,7 @@ public class Observable<T>: ObservableType {
     
     // MARK: - Properties
     
-    private var observations: [ObservationToken: Observation<T>] = [:]
+    private var observers: [ObservationToken: AnyObserver<T>] = [:]
     private var subscriptionBlock: SubscriptionBlock? = nil
     private var observationScheduler: Scheduler?
     private var subscriptionScheduler: Scheduler?
@@ -25,9 +25,10 @@ public class Observable<T>: ObservableType {
     }
     
     deinit {
-        print("Observable deinit")
-        for observation in observations.values {
-            notify(observer: observation.observer, event: .completed, observationScheduler: observation.scheduler)
+        Logger.shared.log("Observable deinit")
+        
+        for observer in observers.values {
+            notify(observer: observer, event: .completed)
         }
     }
     
@@ -44,16 +45,15 @@ public class Observable<T>: ObservableType {
                           onCompleted: (() -> Void)? = nil,
                           queue: SchedulerQueue?) -> Disposable {
         if let queue = queue {
-            subscribeOn(queue)
+            subscriptionScheduler = SchedulerFactory.makeOnQueue(queue)
         }
         
-        let observer = makeObserver(onNext: onNext, onError: onError, onCompleted: onCompleted)
-        let observation = Observation(observer: observer, scheduler: observationScheduler)
+        let observer = makeObserver(onNext: onNext, onError: onError, onCompleted: onCompleted, observationScheduler: observationScheduler)
         
-        observations[observation.token.hashValue] = observation
+        observers[observer.uniqueIdentifier] = observer
         
         let disposable = DisposableFactory.create {
-            self.observations[observation.token.hashValue] = nil
+            self.observers[observer.uniqueIdentifier] = nil
         }
         
         guard let subscriptionBlock = subscriptionBlock else {
@@ -61,7 +61,9 @@ public class Observable<T>: ObservableType {
         }
         
         if let subscriptionScheduler = subscriptionScheduler {
-            subscriptionScheduler.performBlock { subscriptionBlock(observer) }
+            subscriptionScheduler.performBlock {
+                subscriptionBlock(observer)
+            }
         } else {
             subscriptionBlock(observer)
         }
@@ -69,12 +71,16 @@ public class Observable<T>: ObservableType {
         return disposable
     }
     
-    public func subscribeOn(_ queue: SchedulerQueue) {
+    public func subscribeOn(_ queue: SchedulerQueue) -> Self {
         subscriptionScheduler = SchedulerFactory.makeOnQueue(queue)
+        
+        return self
     }
     
-    public func observeOn(_ queue: SchedulerQueue) {
+    public func observeOn(_ queue: SchedulerQueue) -> Self {
         observationScheduler = SchedulerFactory.makeOnQueue(queue)
+        
+        return self
     }
     
     
@@ -84,18 +90,17 @@ public class Observable<T>: ObservableType {
     /// - Returns: an 'EventHandler' to be called when events are published.
     private func makeObserver(onNext: ((T) -> Void)? = nil,
                                   onError: ((Error) -> Void)? = nil,
-                                  onCompleted: (() -> Void)? = nil) -> AnyObserver<T> {
-        let anyObserver = AnyObserver<T>(onNext: onNext, onError: onError, onCompleted: onCompleted)
-        anyObserver.enableDebugging(isDebugging)
-        
+                                  onCompleted: (() -> Void)? = nil,
+                                  observationScheduler: Scheduler? = nil) -> AnyObserver<T> {
+        let anyObserver = AnyObserver<T>(onNext: onNext, onError: onError, onCompleted: onCompleted, scheduler: observationScheduler)        
         return anyObserver
     }
     
     
     /// Call the EventHandler on a single Subscription
     /// - Parameter event: the event being published
-    private func notify(observer: AnyObserver<T>, event: Event<T>, observationScheduler: Scheduler?) {
-        observer.on(event, scheduler: observationScheduler)
+    private func notify(observer: AnyObserver<T>, event: Event<T>) {
+        observer.on(event)
     }
 }
 
@@ -134,22 +139,7 @@ extension Observable {
 
 extension Observable {
     public func debug() -> Observable<T> {
-        enableDebugging(true)
-        
+        // TODO: set log level to verbose
         return self
-    }
-}
-
-// MARK: - Debuggable
-
-extension Observable: Debuggable {
-    public func enableDebugging(_ value: Bool) {
-        isDebugging = value
-        
-        let observers = observations.values.compactMap { $0.observer }
-        
-        for observer in observers {
-            observer.enableDebugging(true)
-        }
     }
 }

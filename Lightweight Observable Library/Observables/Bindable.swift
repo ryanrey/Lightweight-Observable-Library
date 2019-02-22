@@ -5,7 +5,6 @@
 //
 
 import Foundation
-import UIKit
 
 /// A type that will continually update its state when the specified 'BoundType' changes
 /// Example: A UIControl subclass could extend 'Bindable' to have it's UI update anytime the specified 'BoundType' changes
