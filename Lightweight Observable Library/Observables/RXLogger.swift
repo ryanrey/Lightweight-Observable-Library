@@ -6,8 +6,9 @@
 
 import Foundation
 
-public final class Logger {
-    static let shared = Logger()
+public final class RXLogger {
+    static let shared = RXLogger()
+    
     private let queue: DispatchQueue = .rxLogging
     
     public func log<T>(_ message: @autoclosure () -> T) {

@@ -19,7 +19,8 @@ import Foundation
     
     private func dispose() {
         for disposable in disposables {
-            print("Dispose")
+            RXLogger.shared.log("Dispose")
+            
             disposable.dispose()
         }
     }

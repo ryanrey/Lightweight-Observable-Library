@@ -19,26 +19,26 @@ public protocol ObservableType {
 }
 
 
-// MARK: - Convenience extensions
+// MARK: - Convenience Extensions
 
 extension ObservableType {
     @discardableResult
-    func subscribeOnNext(_ onNext: ((T) -> Void)?) -> Disposable {
+    public func subscribeOnNext(_ onNext: ((T) -> Void)?) -> Disposable {
         return subscribeOnNext(nil, onNext)
     }
     
     @discardableResult
-    func subscribeOnError(_ onError: ((Error) -> Void)?) -> Disposable {
+    public func subscribeOnError(_ onError: ((Error) -> Void)?) -> Disposable {
         return subscribeOnError(nil, onError)
     }
     
     @discardableResult
-    func subscribeOnCompleted(_ onCompleted: (() -> Void)?) -> Disposable {
+    public func subscribeOnCompleted(_ onCompleted: (() -> Void)?) -> Disposable {
         return subscribeOnCompleted(queue: nil, onCompleted)
     }
     
     @discardableResult
-    func subscribeOnNext(_ queue: SchedulerQueue? = nil, _ onNext: ((T) -> Void)?) -> Disposable {
+    public func subscribeOnNext(_ queue: SchedulerQueue? = nil, _ onNext: ((T) -> Void)?) -> Disposable {
         return subscribe(onNext: onNext,
                          onError: nil,
                          onCompleted: nil,
@@ -46,7 +46,7 @@ extension ObservableType {
     }
     
     @discardableResult
-    func subscribeOnError(_ queue: SchedulerQueue? = nil, _ onError: ((Error) -> Void)?) -> Disposable {
+    public func subscribeOnError(_ queue: SchedulerQueue? = nil, _ onError: ((Error) -> Void)?) -> Disposable {
         return subscribe(onNext: nil,
                          onError: onError,
                          onCompleted: nil,
@@ -54,7 +54,7 @@ extension ObservableType {
     }
     
     @discardableResult
-    func subscribeOnCompleted(queue: SchedulerQueue? = nil, _ onCompleted: (() -> Void)?) -> Disposable {
+    public func subscribeOnCompleted(queue: SchedulerQueue? = nil, _ onCompleted: (() -> Void)?) -> Disposable {
         return subscribe(onNext: nil,
                          onError: nil,
                          onCompleted: onCompleted,
@@ -62,7 +62,7 @@ extension ObservableType {
     }
     
     @discardableResult
-    func subscribe(onNext: ((T) -> Void)? = nil,
+    public func subscribe(onNext: ((T) -> Void)? = nil,
                    onError: ((Error) -> Void)? = nil,
                    onCompleted: (() -> Void)? = nil) -> Disposable {
         return subscribe(onNext: onNext,

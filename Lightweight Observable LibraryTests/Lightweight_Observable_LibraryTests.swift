@@ -11,7 +11,8 @@ import XCTest
 
 class Lightweight_Observable_LibraryTests: XCTestCase {
     let observable = Observable<Int>.of(1, 2, 3)
-
+    var variable: Variable<Int>?
+    
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -109,93 +110,90 @@ class Lightweight_Observable_LibraryTests: XCTestCase {
         wait(for: [expectation1, expectation2, expectation3], timeout: 5)
     }
     
-//    func testSubscriptionBlockRunsOnce() {
-//        var subscriptionBlockCompletions = 0
-//
-//        let observable = Observable<Int>.create { (observer: AnyObserver<Int>) in
-//            subscriptionBlockCompletions += 1
-//            observer.onNext(1)
-//            sleep(1)
-//            observer.onNext(2)
-//            sleep(1)
-//        }
-//
-//        observable.subscribeOnNext { nextInt in
-//            print("first: \(nextInt)")
-//        }
-//
-//        observable.subscribeOnNext { nextInt in
-//            print("second: \(nextInt)")
-//        }
-//
-//        observable.subscribeOnNext { nextInt in
-//            print("third: \(nextInt)")
-//        }
-//
-//        observable.value = 3
-//
-//        XCTAssert(subscriptionBlockCompletions == 1)
-//    }
-//
-//    func testStartingValue() {
-//        let observable = Observable(1)
-//
-//        observable.subscribeOnNext { nextInt in
-//            print("first: \(nextInt)")
-//        }
-//
-//        observable.subscribeOnNext { nextInt in
-//            print("second: \(nextInt)")
-//        }
-//
-//        observable.subscribeOnNext { nextInt in
-//            print("third: \(nextInt)")
-//        }
-//
-//        observable.value = 4
-//    }
-//
-//    func testLatestValuesOnly() {
-//        let observable = Observable(1)
-//        observable.subscribeOnNext { nextInt in
-//            print("first: \(nextInt)")
-//        }
-//
-//        observable.value = 2
-//        observable.subscribeOnNext { nextInt in
-//            print("second: \(nextInt)")
-//        }
-//
-//        observable.value = 3
-//        observable.subscribeOnNext { nextInt in
-//            print("third: \(nextInt)")
-//        }
-//
-//        observable.value = 4
-//    }
-//
-//    func testSingleDispose() {
-//        let observable = Observable<Int>.create { (observer: AnyObserver<Int>) in
-//            observer.onNext(1)
-//            observer.onNext(2)
-//        }
-//
-//        observable.subscribeOnNext { nextInt in
-//            print("first: \(nextInt)")
-//        }.dispose()
-//
-//        observable.subscribeOnNext { nextInt in
-//            print("second: \(nextInt)")
-//        }
-//
-//        observable.value = 3
-//    }
-//
-//    func testPerformanceExample() {
-//        // This is an example of a performance test case.
-//        self.measure {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
+    func testColdObservable() {
+        var subscriptionBlockCompletions = 0
 
+        let observable = Observable<Int>.create { (observer: AnyObserver<Int>) in
+            subscriptionBlockCompletions += 1
+            observer.onNext(1)
+            sleep(1)
+            observer.onNext(2)
+            sleep(1)
+        }
+
+        observable.subscribeOnNext { nextInt in
+            print("first: \(nextInt)")
+        }
+
+        observable.subscribeOnNext { nextInt in
+            print("second: \(nextInt)")
+        }
+
+        observable.subscribeOnNext { nextInt in
+            print("third: \(nextInt)")
+        }
+
+        XCTAssert(subscriptionBlockCompletions == 3)
+    }
+    
+    func testHotObservable() {
+        // TODO
+    }
+
+    func testStartingValue() {
+        variable = Variable(1)
+        let expectation = XCTestExpectation(description: "hi")
+        
+        variable?.subscribeOnNext { nextInt in
+            print("first: \(nextInt)")
+        }
+
+        variable?.subscribeOnNext { nextInt in
+            print("second: \(nextInt)")
+        }
+
+        variable?.subscribeOnNext { nextInt in
+            print("third: \(nextInt)")
+            expectation.fulfill()
+        }
+
+        variable?.value = 4
+        
+        sleep(1)
+        wait(for: [expectation], timeout: 5.0)
+    }
+
+    func testLatestValuesOnly() {
+        let observable = Variable(1)
+        observable.subscribeOnNext { nextInt in
+            print("first: \(nextInt)")
+        }
+
+        observable.value = 2
+        observable.subscribeOnNext { nextInt in
+            print("second: \(nextInt)")
+        }
+
+        observable.value = 3
+        observable.subscribeOnNext { nextInt in
+            print("third: \(nextInt)")
+        }
+
+        observable.value = 4
+    }
+
+    func testSingleDispose() {
+        let observable = Observable<Int>.create { (observer: AnyObserver<Int>) in
+            observer.onNext(1)
+            observer.onNext(2)
+        }
+
+        observable.subscribeOnNext { nextInt in
+            print("first: \(nextInt)")
+        }.dispose()
+
+        observable.subscribeOnNext { nextInt in
+            print("second: \(nextInt)")
+        }
+    }
 }

@@ -11,7 +11,7 @@ public struct DisposableFactory {
     private init() {}
 }
 
-/// A concrete imlementation of Disposable
+/// A concrete implementation of Disposable
 private class AnyDisposable: Disposable {
     private var disposeBlock: (() -> Void)?
     

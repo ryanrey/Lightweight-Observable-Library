@@ -14,10 +14,10 @@ public class PublishSubject<T>: SubjectType {
     // MARK: - Properties
     
     public var publishedEvents: [Event<T>] = []
-    private let replayCount: Int
-    public private(set) var observers: [ObservationToken: AnyObserver<T>] = [:]
-    public private(set) var observationScheduler: Scheduler?
+    internal private(set) var observers: [ObservationToken: AnyObserver<T>] = [:]
+    internal private(set) var observationScheduler: Scheduler?
     private var subscriptionScheduler: Scheduler?
+    private let replayCount: Int
     
     
     // MARK: - Initialization
@@ -31,11 +31,13 @@ public class PublishSubject<T>: SubjectType {
     }
     
     deinit {
-        Logger.shared.log("Observable deinit")
+        RXLogger.shared.log("Observable deinit")
         
         on(.completed)
     }
     
+    
+    // MARK: - ObservableType
     
     /// Creates and stores a Subscription to this observable.
     /// The subscription will receive 'event's until the subscription removed
@@ -79,32 +81,18 @@ public class PublishSubject<T>: SubjectType {
         return disposable
     }
     
+    /// - Parameter queue: the queue to perform the subscription block on
     public func subscribeOn(_ queue: SchedulerQueue) -> Self {
         subscriptionScheduler = SchedulerFactory.makeOnQueue(queue)
         
         return self
     }
     
+    /// - Parameter queue: the queue to perform AnyObserver callbacks on (i.e. onNext, onError, onCompleted)
     public func observeOn(_ queue: SchedulerQueue) -> Self {
         observationScheduler = SchedulerFactory.makeOnQueue(queue)
         
         return self
-    }
-    
-    
-    // MARK: - Private ObserverType
-    
-    private func on(_ event: Event<T>) {
-        guard publishedEvents.contains(where: {$0.isTerminationEvent}) == false else {
-            Logger.shared.log("Cannot publish event. Observable has already been terminated")
-            return
-        }
-        
-        self.publishedEvents.append(event)
-        
-        for observer in observers.values {
-            observer.on(event)
-        }
     }
     
     
@@ -125,10 +113,27 @@ public class PublishSubject<T>: SubjectType {
         
         return AnyObserver<T>(onNext: onNextBlock, onError: onErrorBlock, onCompleted: onCompletedBlock, scheduler: observationScheduler)
     }
+    
+    
+    // MARK: - Private ObserverType
+    
+    private func on(_ event: Event<T>) {
+        guard publishedEvents.contains(where: {$0.isTerminationEvent}) == false else {
+            RXLogger.shared.log("Cannot publish event. Observable has already been terminated")
+            return
+        }
+        
+        self.publishedEvents.append(event)
+        
+        for observer in observers.values {
+            observer.on(event)
+        }
+    }
 }
 
 
 extension PublishSubject {
+    /// - Returns: the events to replay upon subscription
     private func eventsToReplay() -> [Event<T>]? {
         guard replayCount > 0 else { return nil }
         guard publishedEvents.count > 0 else { return nil }

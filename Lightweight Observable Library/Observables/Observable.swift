@@ -25,7 +25,7 @@ public class Observable<T>: ObservableType {
     }
     
     deinit {
-        Logger.shared.log("Observable deinit")
+        RXLogger.shared.log("Observable deinit")
         
         for observer in observers.values {
             notify(observer: observer, event: .completed)
@@ -48,7 +48,7 @@ public class Observable<T>: ObservableType {
             subscriptionScheduler = SchedulerFactory.makeOnQueue(queue)
         }
         
-        let observer = makeObserver(onNext: onNext, onError: onError, onCompleted: onCompleted, observationScheduler: observationScheduler)
+        let observer = AnyObserver<T>(onNext: onNext, onError: onError, onCompleted: onCompleted, scheduler: observationScheduler)
         
         observers[observer.uniqueIdentifier] = observer
         
@@ -71,12 +71,14 @@ public class Observable<T>: ObservableType {
         return disposable
     }
     
+    /// - Parameter queue: the queue to perform the subscription block on
     public func subscribeOn(_ queue: SchedulerQueue) -> Self {
         subscriptionScheduler = SchedulerFactory.makeOnQueue(queue)
         
         return self
     }
     
+    /// - Parameter queue: the queue to perform AnyObserver callbacks on (i.e. onNext, onError, onCompleted)
     public func observeOn(_ queue: SchedulerQueue) -> Self {
         observationScheduler = SchedulerFactory.makeOnQueue(queue)
         
@@ -86,52 +88,10 @@ public class Observable<T>: ObservableType {
     
     // MARK: - Private
     
-    /// Transforms all event callbacks into a single 'AnyObserver'.
-    /// - Returns: an 'EventHandler' to be called when events are published.
-    private func makeObserver(onNext: ((T) -> Void)? = nil,
-                                  onError: ((Error) -> Void)? = nil,
-                                  onCompleted: (() -> Void)? = nil,
-                                  observationScheduler: Scheduler? = nil) -> AnyObserver<T> {
-        return AnyObserver<T>(onNext: onNext, onError: onError, onCompleted: onCompleted, scheduler: observationScheduler)
-    }
-    
-    
-    /// Call the EventHandler on a single Subscription
+    /// - Parameter observer: the observer to notify
     /// - Parameter event: the event being published
     private func notify(observer: AnyObserver<T>, event: Event<T>) {
         observer.on(event)
-    }
-}
-
-
-// MARK: - Factory Methods
-
-extension Observable {
-    static func just<T>(_ element: T) -> Observable<T> {
-        return Observable.create { observer in
-            observer.on(.next(element))
-            observer.on(.completed)
-        }
-    }
-    
-    static func of<T>(_ sequence: T...) -> Observable<T> {
-        return Observable.create { observer in
-            for element in sequence {
-                observer.on(.next(element))
-            }
-            
-            observer.on(.completed)
-        }
-    }
-}
-
-extension Observable {
-    static func create<T>() -> Observable<T> {
-        return Observable<T>()
-    }
-    
-    static func create<T>(_ block: @escaping (AnyObserver<T>) -> Void) -> Observable<T> {
-        return Observable<T>(subscriptionBlock: block)
     }
 }
 

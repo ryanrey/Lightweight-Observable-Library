@@ -6,15 +6,20 @@
 
 import Foundation
 
-/// A class that registers callbacks for various Events. Essentially an object representation of an event handler. 
+/// A class that registers callbacks for various Events.
 public class AnyObserver<T>: ObserverType {
     public typealias Element = T
+    
+    // MARK: - Properties
     
     private let nextBlock: ((T) -> Void)?
     private let errorBlock: ((Error) -> Void)?
     private let completedBlock: (() -> Void)?
     private var scheduler: Scheduler?
     private let _uniqueIdentifier = UUID()
+    
+    
+    // MARK: - Initialization
     
     public init(onNext: ((T) -> Void)? = nil,
         onError: ((Error) -> Void)? = nil,
@@ -26,9 +31,11 @@ public class AnyObserver<T>: ObserverType {
         self.scheduler = scheduler
     }
     
-    // TODO: Pass in the scheduler into this event vs. storing on AnyObserver directly?
+    
+    // MARK: - ObserverType
+    
     public func on(_ event: Event<Element>) {
-        Logger.shared.log("[DEBUG] [\(ObjectIdentifier(self).hashValue)]: \(event)")
+        RXLogger.shared.log("[DEBUG] [\(ObjectIdentifier(self).hashValue)]: \(event)")
         
         switch event {
         case .next(let value):
@@ -65,7 +72,7 @@ public class AnyObserver<T>: ObserverType {
 
 // MARK: - Uniquable
 
-extension AnyObserver: Uniquable {
+extension AnyObserver: Uniqueable {
     public var uniqueIdentifier: Int {
         return _uniqueIdentifier.hashValue
     }

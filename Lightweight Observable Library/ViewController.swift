@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     @IBAction func goToNext(_ sender: Any) {
         let testVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TestVC") as! TestVC
         
-       navigationController?.pushViewController(testVC, animated: true)
+        navigationController?.pushViewController(testVC, animated: true)
     }
     
     override func viewDidLoad() {

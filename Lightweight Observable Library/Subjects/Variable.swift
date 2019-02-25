@@ -7,8 +7,10 @@
 import Foundation
 
 public final class Variable<T>: BehaviorSubject<T> {
-    private let lock = NSRecursiveLock()
     
+    // MARK: - Properties
+    
+    private let lock = NSRecursiveLock()
     private var _value: T
     
     public var value: T {
@@ -27,29 +29,14 @@ public final class Variable<T>: BehaviorSubject<T> {
         }
     }
     
+    
+    // MARK: - Initialization
+    
     public init(_ value: T) {
         self._value = value
         super.init()
-    }
-    
-    
-    // MARK: - Private ObserverType
-    
-    private func on(_ event: Event<T>) {
-        guard publishedEvents.contains(where: {$0.isTerminationEvent}) == false else {
-            Logger.shared.log("Cannot publish event. Observable has already been terminated")
-            return
-        }
         
-        self.publishedEvents.append(event)
-        
-        if case let .next(element) = event {
-            self.value = element
-        }
-        
-        for observer in observers.values {
-            observer.on(event)
-        }
+        publishedEvents.append(.next(value))
     }
     
     
@@ -69,5 +56,25 @@ public final class Variable<T>: BehaviorSubject<T> {
         }
         
         return AnyObserver<T>(onNext: onNextBlock, onError: onErrorBlock, onCompleted: onCompletedBlock, scheduler: observationScheduler)
+    }
+    
+    
+    // MARK: - Private ObserverType
+    
+    private func on(_ event: Event<T>) {
+        guard publishedEvents.contains(where: {$0.isTerminationEvent}) == false else {
+            RXLogger.shared.log("Cannot publish event. Observable has already been terminated")
+            return
+        }
+        
+        self.publishedEvents.append(event)
+        
+        if case let .next(element) = event {
+            self.value = element
+        }
+        
+        for observer in observers.values {
+            observer.on(event)
+        }
     }
 }
