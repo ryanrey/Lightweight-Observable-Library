@@ -1,8 +1,6 @@
 //
 //  Lightweight_Observable_LibraryTests.swift
-//  Lightweight Observable LibraryTests
 //
-//  Created by Ark on 12/14/18.
 //  Copyright © 2018 Ark. All rights reserved.
 //
 
@@ -10,10 +8,9 @@ import XCTest
 @testable import Lightweight_Observable_Library
 
 class Lightweight_Observable_LibraryTests: XCTestCase {
-    let observable = Observable<Int>.of(1, 2, 3)
-    
-    
     func testObservationQueue() {
+        let observable = Observable<Int>.of(1, 2, 3)
+        
         let mainThreadExpectation = XCTestExpectation(description: "mainThreadExpectation")
         let serialQueueExpectation = XCTestExpectation(description: "serialQueueExpectation")
         
@@ -37,7 +34,7 @@ class Lightweight_Observable_LibraryTests: XCTestCase {
         wait(for: [mainThreadExpectation, serialQueueExpectation ], timeout: 1)
     }
     
-    func testSubsriptionQueue() {
+    func testSubscriptionQueue() {
         // TODO
     }
     

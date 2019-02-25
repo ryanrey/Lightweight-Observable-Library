@@ -16,20 +16,7 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CY4-vw-cra">
-                                <rect key="frame" x="164.5" y="350.5" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="goToNext:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VKr-uR-pws"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="CY4-vw-cra" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="ADe-bT-vO0"/>
-                            <constraint firstItem="CY4-vw-cra" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="iyf-fk-Swz"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="wW0-Ih-bfq"/>

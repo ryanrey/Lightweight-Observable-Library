@@ -166,11 +166,11 @@
 		0ADFFADB21C4938000A1ADB4 /* Lightweight Observable Library */ = {
 			isa = PBXGroup;
 			children = (
+				0ADFFADC21C4938000A1ADB4 /* AppDelegate.swift */,
 				0ADFFAFE21C497B100A1ADB4 /* Observables */,
 				0A3980E921EC318E00BE6693 /* Disposables */,
 				0A3980DF21EC2DD600BE6693 /* Schedulers */,
 				0A568176222380160033009A /* Subjects */,
-				0ADFFADC21C4938000A1ADB4 /* AppDelegate.swift */,
 				0ADFFADE21C4938000A1ADB4 /* ViewController.swift */,
 				0ADFFAE021C4938000A1ADB4 /* Main.storyboard */,
 				0ADFFAE321C4938100A1ADB4 /* Assets.xcassets */,
