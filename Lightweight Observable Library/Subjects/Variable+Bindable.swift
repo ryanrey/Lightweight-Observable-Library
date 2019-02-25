@@ -1,16 +1,14 @@
 //
-//  Observable+Extensions.swift
+//  Variable+Bindable.swift
 //
-//  Copyright © 2018 Ark. All rights reserved.
+//  Copyright © 2019 Ark. All rights reserved.
 //
 
 import Foundation
 
-extension Observable {
+extension Variable {
     @discardableResult
     public func bind<B: Bindable>(to bindable: B) -> Disposable where B.BoundType == T {
-        bindable.updateValue(value!)
-        
         return subscribeOnNext { value in
             bindable.updateValue(value)
         }
@@ -18,11 +16,8 @@ extension Observable {
     
     @discardableResult
     public func bind<B: Bindable>(to bindable: B) -> Disposable where B.BoundType == T? {
-        bindable.updateValue(value)
-        
         return subscribeOnNext { value in
             bindable.updateValue(value)
         }
     }
 }
-

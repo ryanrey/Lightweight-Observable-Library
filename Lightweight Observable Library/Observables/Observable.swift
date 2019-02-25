@@ -7,59 +7,29 @@
 import Foundation
 
 public class Observable<T>: ObservableType {
-    typealias ObservationToken = Int
-    typealias SubscriptionBlock = (AnyObserver<T>) -> Void
+    public typealias SubscriptionBlock = (AnyObserver<T>) -> Void
+    public typealias ObservationToken = Int
     
     // MARK: - Properties
     
-    private var _value: T?
-    private var observations: [ObservationToken: Observation<T>] = [:]
-    private let lock = NSRecursiveLock()
-    private var terminationEvent: Event<T>?
+    private var observers: [ObservationToken: AnyObserver<T>] = [:]
     private var subscriptionBlock: SubscriptionBlock? = nil
     private var observationScheduler: Scheduler?
-    
-    public var value: T? {
-        get {
-            lock.lock()
-            defer { lock.unlock() }
-            
-            return _value
-        }
-        set {
-            lock.lock()
-            defer { lock.unlock() }
-            
-            _value = newValue
-            
-            if let newValue = newValue {
-                notify(event: .next(newValue), scheduler: observationScheduler)
-            }
-        }
-    }
+    private var subscriptionScheduler: Scheduler?
     
     
     // MARK: - Initialization
     
-    convenience init(_ value: T) {
-        let subscriptionBlock = { (observer: AnyObserver<T>) in
-            observer.on(.next(value))
-        }
-        
-        self.init(subscriptionBlock: subscriptionBlock)
-    }
-    
-    convenience init() {
-        self.init(subscriptionBlock: nil)
-    }
-    
-    init(subscriptionBlock: SubscriptionBlock? = nil) {
+    public init(subscriptionBlock: SubscriptionBlock? = nil) {
         self.subscriptionBlock = subscriptionBlock
     }
     
     deinit {
-        print("Observable deinit")
-        notify(event: .completed, scheduler: observationScheduler)
+        RXLogger.shared.verbose("Observable deinit")
+        
+        for observer in observers.values {
+            notify(observer: observer, event: .completed)
+        }
     }
     
     
@@ -74,146 +44,62 @@ public class Observable<T>: ObservableType {
                           onError: ((Error) -> Void)? = nil,
                           onCompleted: (() -> Void)? = nil,
                           queue: SchedulerQueue?) -> Disposable {
-        let observer = makeObserver(onNext: onNext, onError: onError, onCompleted: onCompleted)
-        let observation = Observation(observer: observer)
-        
-        observations[observation.token.hashValue] = observation
-        
-        let disposable = DisposableFactory.create {
-           self.observations[observation.token.hashValue] = nil
+        if let queue = queue {
+            subscriptionScheduler = SchedulerFactory.makeOnQueue(queue)
         }
         
-        if let terminationEvent = terminationEvent {
-            notify(observation: observation, event: terminationEvent, scheduler: observationScheduler)
+        let observer = AnyObserver<T>(onNext: onNext, onError: onError, onCompleted: onCompleted, scheduler: observationScheduler)
+        
+        observers[observer.uniqueIdentifier] = observer
+        
+        let disposable = DisposableFactory.create {
+            self.observers[observer.uniqueIdentifier] = nil
+        }
+        
+        guard let subscriptionBlock = subscriptionBlock else {
             return disposable
         }
         
-        // either sets the given value on creation, or runs a creation block
-        // i.e. let observable = Observable(3): subscription block is .next(3)
-        // i.e.  let observable = Observable.create { observer in
-        //              observer.onNext(1)
-        //              observer.onNext(2)
-        // will have a subscriptionBlock: next(1); next(2);
-        if let subscriptionBlock = subscriptionBlock {
-            if let subscriptionQueue = queue {
-                let scheduler = SchedulerFactory.makeOnQueue(subscriptionQueue)
-                runSubscriptionBlock(subscriptionBlock, scheduler: scheduler)
-            } else {
-                runSubscriptionBlock(subscriptionBlock)
+        if let subscriptionScheduler = subscriptionScheduler {
+            subscriptionScheduler.performBlock {
+                subscriptionBlock(observer)
             }
-            
-            self.subscriptionBlock = nil
-        } else if let currentValue = self.value {
-            if let observationScheduler = observationScheduler {
-                notify(observation: observation, event: .next(currentValue), scheduler: observationScheduler)
-            } else {
-                notify(observation: observation, event: .next(currentValue))
-            }
+        } else {
+            subscriptionBlock(observer)
         }
 
         return disposable
     }
     
-    public func observeOn(_ queue: SchedulerQueue) {
+    /// - Parameter queue: the queue to perform the subscription block on
+    public func subscribeOn(_ queue: SchedulerQueue) -> Self {
+        subscriptionScheduler = SchedulerFactory.makeOnQueue(queue)
+        
+        return self
+    }
+    
+    /// - Parameter queue: the queue to perform AnyObserver callbacks on (i.e. onNext, onError, onCompleted)
+    public func observeOn(_ queue: SchedulerQueue) -> Self {
         observationScheduler = SchedulerFactory.makeOnQueue(queue)
+        
+        return self
     }
     
     
     // MARK: - Private
     
-    /// Transforms all event callbacks into a single 'AnyObserver'.
-    /// - Returns: an 'EventHandler' to be called when events are published.
-    fileprivate func makeObserver(onNext: ((T) -> Void)? = nil,
-                                  onError: ((Error) -> Void)? = nil,
-                                  onCompleted: (() -> Void)? = nil) -> AnyObserver<T> {
-        return AnyObserver<T>(onNext: onNext, onError: onError, onCompleted: onCompleted)
-    }
-    
-    /// Call the EventHandler on all existing Subscriptions
+    /// - Parameter observer: the observer to notify
     /// - Parameter event: the event being published
-    private func notify(event: Event<T>, scheduler: Scheduler? = nil) {
-        observations.values.forEach { observation in
-            notify(observation: observation, event: event, scheduler: scheduler)
-        }
-    }
-    
-    /// Call the EventHandler on a single Subscription
-    /// - Parameter event: the event being published
-    private func notify(observation: Observation<T>, event: Event<T>, scheduler: Scheduler? = nil) {
-        let observer = observation.observer
-        
-        guard let scheduler = scheduler else {
-            observer.on(event)
-            return
-        }
-        
-        scheduler.performBlock {
-           observer.on(event)
-        }
-    }
-    
-    /// Call the EventHandler on a single Subscription
-    /// - Parameter event: the event being published
-    private func runSubscriptionBlock(_ subscriptionBlock: @escaping (AnyObserver<T>) -> Void, scheduler: Scheduler? = nil) {
-        if let scheduler = scheduler {
-            scheduler.performBlock { subscriptionBlock(self.asObserver()) }
-        } else {
-            subscriptionBlock(self.asObserver())
-        }
-    }
-    
-    /// Call the EventHandler on a single Subscription
-    /// - Parameter event: the event being published
-    private func runSubscriptionBlock(_ subscriptionBlock: @escaping (AnyObserver<T>) -> Void,
-                                      observer: AnyObserver<T>,
-                                      scheduler: Scheduler? = nil) {
-        if let scheduler = scheduler {
-            scheduler.performBlock { subscriptionBlock(observer) }
-        } else {
-            subscriptionBlock(observer)
-        }
+    private func notify(observer: AnyObserver<T>, event: Event<T>) {
+        observer.on(event)
     }
 }
+
 
 extension Observable {
-    static func just<T>(_ value: T) -> Observable<T> {
-        return Observable.create { observer in
-            observer.on(.next(value))
-            observer.on(.completed)
-        }
-    }
-}
-
-extension Observable {
-    static func create<T>() -> Observable<T> {
-        return Observable<T>()
-    }
-    
-    static func create<T>(_ block: @escaping (AnyObserver<T>) -> Void) -> Observable<T> {
-        return Observable<T>(subscriptionBlock: block)
-    }
-}
-
-
-extension Observable: SubjectType {
-    public typealias SubjectObserverType = AnyObserver<T>
-    
-    public func asObserver() -> SubjectObserverType {
-        let onNextBlock: ((T) -> Void) = { element in
-            self.value = element
-           // self.notify(event: .next(element), scheduler: self.observationScheduler)
-        }
+    public func debug() -> Observable<T> {
+        RXLogger.shared.logLevel = .debug
         
-        let onErrorBlock: ((Error) -> Void) = { error in
-            self.notify(event: .error(error), scheduler: self.observationScheduler)
-        }
-        
-        let onCompletedBlock: (() -> Void) = {
-            self.notify(event: .completed, scheduler: self.observationScheduler)
-        }
-        
-        return AnyObserver<T>.init(onNext: onNextBlock,
-                                onError: onErrorBlock,
-                                onCompleted: onCompletedBlock)
+        return self
     }
 }

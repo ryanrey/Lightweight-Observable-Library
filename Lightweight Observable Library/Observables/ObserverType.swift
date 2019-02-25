@@ -12,6 +12,7 @@ public protocol ObserverType {
     func on(_ event: Event<Element>)
 }
 
+
 extension ObserverType {
     public func onNext(_ element: Element) {
         on(.next(element))

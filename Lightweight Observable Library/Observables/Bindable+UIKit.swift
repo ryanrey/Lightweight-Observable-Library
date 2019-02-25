@@ -14,9 +14,6 @@ extension UILabel: Bindable {
     }
 }
 
-extension UICollectionViewCell {
-    
-}
 extension UIImageView: Bindable {
     public typealias T = UIImage
     
