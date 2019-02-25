@@ -25,7 +25,7 @@ public class Observable<T>: ObservableType {
     }
     
     deinit {
-        RXLogger.shared.log("Observable deinit")
+        RXLogger.shared.verbose("Observable deinit")
         
         for observer in observers.values {
             notify(observer: observer, event: .completed)
@@ -98,7 +98,8 @@ public class Observable<T>: ObservableType {
 
 extension Observable {
     public func debug() -> Observable<T> {
-        // TODO: set log level to verbose
+        RXLogger.shared.logLevel = .debug
+        
         return self
     }
 }

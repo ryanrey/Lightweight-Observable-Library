@@ -35,7 +35,7 @@ public class AnyObserver<T>: ObserverType {
     // MARK: - ObserverType
     
     public func on(_ event: Event<Element>) {
-        RXLogger.shared.log("[DEBUG] [\(ObjectIdentifier(self).hashValue)]: \(event)")
+        RXLogger.shared.verbose("[\(ObjectIdentifier(self).hashValue)]: \(event)")
         
         switch event {
         case .next(let value):

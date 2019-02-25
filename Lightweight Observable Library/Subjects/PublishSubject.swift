@@ -31,7 +31,7 @@ public class PublishSubject<T>: SubjectType {
     }
     
     deinit {
-        RXLogger.shared.log("Observable deinit")
+        RXLogger.shared.verbose("Observable deinit")
         
         on(.completed)
     }
@@ -119,7 +119,7 @@ public class PublishSubject<T>: SubjectType {
     
     private func on(_ event: Event<T>) {
         guard publishedEvents.contains(where: {$0.isTerminationEvent}) == false else {
-            RXLogger.shared.log("Cannot publish event. Observable has already been terminated")
+            RXLogger.shared.debug("Cannot publish event. Observable has already been terminated")
             return
         }
         
