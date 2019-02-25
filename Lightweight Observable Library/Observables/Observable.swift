@@ -8,7 +8,7 @@ import Foundation
 
 public class Observable<T>: ObservableType {
     public typealias SubscriptionBlock = (AnyObserver<T>) -> Void
-    private typealias ObservationToken = Int
+    public typealias ObservationToken = Int
     
     // MARK: - Properties
     
@@ -92,8 +92,7 @@ public class Observable<T>: ObservableType {
                                   onError: ((Error) -> Void)? = nil,
                                   onCompleted: (() -> Void)? = nil,
                                   observationScheduler: Scheduler? = nil) -> AnyObserver<T> {
-        let anyObserver = AnyObserver<T>(onNext: onNext, onError: onError, onCompleted: onCompleted, scheduler: observationScheduler)        
-        return anyObserver
+        return AnyObserver<T>(onNext: onNext, onError: onError, onCompleted: onCompleted, scheduler: observationScheduler)
     }
     
     

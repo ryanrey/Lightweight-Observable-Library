@@ -39,17 +39,26 @@ extension ObservableType {
     
     @discardableResult
     func subscribeOnNext(_ queue: SchedulerQueue? = nil, _ onNext: ((T) -> Void)?) -> Disposable {
-        return subscribe(onNext: onNext, onError: nil, onCompleted: nil, queue: queue)
+        return subscribe(onNext: onNext,
+                         onError: nil,
+                         onCompleted: nil,
+                         queue: queue)
     }
     
     @discardableResult
     func subscribeOnError(_ queue: SchedulerQueue? = nil, _ onError: ((Error) -> Void)?) -> Disposable {
-        return subscribe(onNext: nil, onError: onError, onCompleted: nil, queue: queue)
+        return subscribe(onNext: nil,
+                         onError: onError,
+                         onCompleted: nil,
+                         queue: queue)
     }
     
     @discardableResult
     func subscribeOnCompleted(queue: SchedulerQueue? = nil, _ onCompleted: (() -> Void)?) -> Disposable {
-        return subscribe(onNext: nil, onError: nil, onCompleted: onCompleted, queue: queue)
+        return subscribe(onNext: nil,
+                         onError: nil,
+                         onCompleted: onCompleted,
+                         queue: queue)
     }
     
     @discardableResult
