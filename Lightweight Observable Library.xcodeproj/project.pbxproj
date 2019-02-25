@@ -39,7 +39,6 @@
 		0ADFFB0A21C4C8D300A1ADB4 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0921C4C8D300A1ADB4 /* Bindable.swift */; };
 		0ADFFB1021C58BE600A1ADB4 /* Bindable+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFFB0F21C58BE600A1ADB4 /* Bindable+UIKit.swift */; };
 		0AF0A4EC21DDC304009C05A6 /* DisposableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0A4EB21DDC304009C05A6 /* DisposableContainer.swift */; };
-		0AF0A4EE21DDC756009C05A6 /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0A4ED21DDC756009C05A6 /* TestVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,7 +88,6 @@
 		0ADFFB0921C4C8D300A1ADB4 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		0ADFFB0F21C58BE600A1ADB4 /* Bindable+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bindable+UIKit.swift"; sourceTree = "<group>"; };
 		0AF0A4EB21DDC304009C05A6 /* DisposableContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisposableContainer.swift; sourceTree = "<group>"; };
-		0AF0A4ED21DDC756009C05A6 /* TestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,7 +173,6 @@
 				0ADFFADC21C4938000A1ADB4 /* AppDelegate.swift */,
 				0ADFFADE21C4938000A1ADB4 /* ViewController.swift */,
 				0ADFFAE021C4938000A1ADB4 /* Main.storyboard */,
-				0AF0A4ED21DDC756009C05A6 /* TestVC.swift */,
 				0ADFFAE321C4938100A1ADB4 /* Assets.xcassets */,
 				0ADFFAE521C4938100A1ADB4 /* LaunchScreen.storyboard */,
 				0ADFFAE821C4938100A1ADB4 /* Info.plist */,
@@ -321,7 +318,6 @@
 				0ADFFB0621C4B19600A1ADB4 /* Disposable.swift in Sources */,
 				0ADFFB0A21C4C8D300A1ADB4 /* Bindable.swift in Sources */,
 				0ABCFB5521E18AC90052FDBF /* ObserverType.swift in Sources */,
-				0AF0A4EE21DDC756009C05A6 /* TestVC.swift in Sources */,
 				0ADFFADF21C4938000A1ADB4 /* ViewController.swift in Sources */,
 				0ABCFB5E21E198B70052FDBF /* SubjectType.swift in Sources */,
 				0A3980E521EC2E0A00BE6693 /* ConcurrentScheduler.swift in Sources */,
