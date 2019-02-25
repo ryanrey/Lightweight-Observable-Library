@@ -11,7 +11,6 @@ import XCTest
 
 class Lightweight_Observable_LibraryTests: XCTestCase {
     let observable = Observable<Int>.of(1, 2, 3)
-    var variable: Variable<Int>?
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -141,45 +140,46 @@ class Lightweight_Observable_LibraryTests: XCTestCase {
     }
 
     func testStartingValue() {
-        variable = Variable(1)
+        let variable = Variable(1)
         let expectation = XCTestExpectation(description: "hi")
         
-        variable?.subscribeOnNext { nextInt in
+        variable.subscribeOnNext { nextInt in
             print("first: \(nextInt)")
         }
 
-        variable?.subscribeOnNext { nextInt in
+        variable.asObserver().onNext(2)
+        
+        variable.subscribeOnNext { nextInt in
             print("second: \(nextInt)")
         }
 
-        variable?.subscribeOnNext { nextInt in
+        variable.asObserver().onNext(3)
+        
+        variable.subscribeOnNext { nextInt in
             print("third: \(nextInt)")
             expectation.fulfill()
         }
-
-        variable?.value = 4
         
-        sleep(1)
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectation], timeout: 1.0)
     }
 
     func testLatestValuesOnly() {
-        let observable = Variable(1)
-        observable.subscribeOnNext { nextInt in
+        let variable = Variable(1)
+        variable.subscribeOnNext { nextInt in
             print("first: \(nextInt)")
         }
 
-        observable.value = 2
-        observable.subscribeOnNext { nextInt in
+        variable.asObserver().onNext(2)
+        variable.subscribeOnNext { nextInt in
             print("second: \(nextInt)")
         }
 
-        observable.value = 3
+        variable.asObserver().onNext(3)
         observable.subscribeOnNext { nextInt in
             print("third: \(nextInt)")
         }
 
-        observable.value = 4
+        variable.asObserver().onNext(4)
     }
 
     func testSingleDispose() {

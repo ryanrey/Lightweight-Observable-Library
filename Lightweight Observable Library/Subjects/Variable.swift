@@ -13,7 +13,7 @@ public final class Variable<T>: BehaviorSubject<T> {
     private let lock = NSRecursiveLock()
     private var _value: T
     
-    public var value: T {
+    public private(set) var value: T {
         get {
             lock.lock()
             defer { lock.unlock() }

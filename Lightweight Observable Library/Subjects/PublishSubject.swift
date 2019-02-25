@@ -139,7 +139,10 @@ extension PublishSubject {
         guard publishedEvents.count > 0 else { return nil }
         
         let numberOfEventsToReplay = min(replayCount, publishedEvents.count)
-        let eventsToReplay: [Event<T>] = publishedEvents.dropLast(numberOfEventsToReplay).compactMap { $0 }
+        let eventsToReplay: [Event<T>] = publishedEvents.lazy
+            .reversed()
+            .prefix(upTo: numberOfEventsToReplay)
+            .compactMap { $0 }
         
         return eventsToReplay
     }
